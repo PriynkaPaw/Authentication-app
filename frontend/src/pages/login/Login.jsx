@@ -4,7 +4,7 @@ import "react-phone-input-2/lib/style.css";
 import { FacebookButton, GoogleButton } from "../authButtons/AuthButtons";
 import InputField from "../inputField/InputField";
 
-function Signup() {
+function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -65,7 +65,7 @@ function Signup() {
     <div className="container-fluid px-1 py-5 mx-auto">
       <div className="row d-flex justify-content-center">
         <div className="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
-          <h3>Sign Up</h3>
+          <h3>Login</h3>
           <div className="card">
             <form className="form-card" onSubmit={handleSubmit}>
               <div className="row justify-content-between text-left">
@@ -101,7 +101,7 @@ function Signup() {
               <div className="row justify-content-end">
                 <div className="form-group col-sm-6">
                   <button type="submit" className="btn-block bg-primary">
-                    Signup
+                    Login
                   </button>
                 </div>
 
@@ -120,4 +120,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Login;
