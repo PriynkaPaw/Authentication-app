@@ -97,6 +97,8 @@ router.get(
 );
 
 router.get("/success", async (req, res) => {
+  console.log("res: ", res);
+
   res.render("success", { user: userProfile });
 });
 

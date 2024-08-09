@@ -8,13 +8,20 @@ import otpRegisterRouter from "./routes/authRoutes.js";
 import cors from "cors";
 import googleAuthRouter from "./controllers/google-auth.js";
 import facebookRouter from "./controllers/facebook-auth.js";
+import phoneNumAuthController from "./controllers/phoneNumber-authController.js";
+import registerRouter from "./routes/registerRoute.js";
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
-
+app.use(express.json());
 mongoose.connect("mongodb://localhost:27017/Authentication", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -34,6 +41,8 @@ app.use(passport.session());
 app.use("/", otpRegisterRouter);
 app.use("/auth/google", googleAuthRouter);
 app.use("/auth/facebook", facebookRouter);
+app.use("/", phoneNumAuthController);
+app.use("/", registerRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ error: "Not Found" });

@@ -1,19 +1,3 @@
-// import mongoose from "mongoose";
-
-// const userSchema = new mongoose.Schema({
-//   googleId: String,
-//   email: String,
-//   name: String,
-//   picture: String,
-//   otp: String,
-//   otpExpiry: Date,
-//   verified: { type: Boolean, default: false },
-// });
-
-// const User = mongoose.model("User", userSchema);
-
-// export default User;
-
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
@@ -35,6 +19,12 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     provider: {
+      type: String,
+    },
+    phone: {
+      type: Number,
+    },
+    password: {
       type: String,
     },
   },

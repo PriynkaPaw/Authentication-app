@@ -3,7 +3,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { FacebookButton, GoogleButton } from "../authButtons/AuthButtons";
 import InputField from "../inputField/InputField";
-
+import axios from "axios";
 function Signup() {
   const [formData, setFormData] = useState({
     name: "",
@@ -26,12 +26,64 @@ function Signup() {
     password: false,
   });
 
+  const [otp, setOtp] = useState("");
+  const [step, setStep] = useState(1);
+
+  const sendOtp = async (formData) => {
+    try {
+      console.log("formdata", formData);
+      const { phone } = formData;
+      const res = await axios.post(
+        "http://localhost:8080/num/send-otp",
+        {
+          phone,
+        },
+        { withCredentials: true }
+      );
+      console.log("response otp", res.data.otp);
+      setStep(2);
+    } catch (error) {
+      console.error("Error sending OTP", error);
+    }
+  };
+
+  const verifyOtp = async () => {
+    try {
+      const { phone } = formData;
+      const response = await axios.post(
+        "http://localhost:8080/num/verify-otp",
+        {
+          phone,
+          otp,
+        },
+        { withCredentials: true }
+      );
+      alert(response.data);
+    } catch (error) {
+      console.error("Error verifying OTP", error);
+    }
+  };
+  const registerUser = async () => {
+    try {
+      console.log("formdata", formData);
+
+      const res = await axios.post(
+        "http://localhost:8080/register-user",
+
+        formData,
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.error("Error sending OTP", error);
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     const formHasErrors = Object.values(errors).some((error) => error !== "");
     if (formHasErrors) {
       return;
     }
+    sendOtp();
     console.log("user registration data", formData);
   };
 
@@ -54,7 +106,7 @@ function Signup() {
           return "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character";
         break;
       case "phone":
-        const phoneRegex = /^[0-9]{10}$/;
+        const phoneRegex = /^\+?[1-9]\d{1,14}$/;
         if (value.trim() === "") return "Phone number is required";
         if (!phoneRegex.test(value))
           return "Please enter a valid 10-digit phone number";
@@ -72,7 +124,8 @@ function Signup() {
   };
 
   const handlePhoneChange = (value) => {
-    handleChangeData("phone", value);
+    const phoneWithCountryCode = `+${value}`;
+    handleChangeData("phone", phoneWithCountryCode);
   };
 
   const handleBlur = (e) => {
@@ -149,11 +202,27 @@ function Signup() {
               />
 
               <div className="row justify-content-end">
-                <div className="form-group col-sm-6">
-                  <button type="submit" className="btn-block bg-primary">
-                    Signup
-                  </button>
-                </div>
+                {step === 1 ? (
+                  <div className="form-group col-sm-6">
+                    <button
+                      onClick={registerUser}
+                      type="submit"
+                      className="btn-block bg-primary"
+                    >
+                      Signup
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <input
+                      type="text"
+                      placeholder="Enter OTP"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                    />
+                    <button onClick={verifyOtp}>Verify OTP</button>
+                  </>
+                )}
 
                 <div className="col-12 col-lg-5 d-flex align-items-center">
                   <div className="d-flex gap-3 flex-column w-100 ">
