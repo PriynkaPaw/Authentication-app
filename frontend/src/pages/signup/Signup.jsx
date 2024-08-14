@@ -29,7 +29,7 @@ function Signup() {
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState(1);
 
-  const sendOtp = async (formData) => {
+  const sendOtp = async () => {
     try {
       console.log("formdata", formData);
       const { phone } = formData;
@@ -205,7 +205,7 @@ function Signup() {
                 {step === 1 ? (
                   <div className="form-group col-sm-6">
                     <button
-                      onClick={registerUser}
+                      onClick={sendOtp}
                       type="submit"
                       className="btn-block bg-primary"
                     >

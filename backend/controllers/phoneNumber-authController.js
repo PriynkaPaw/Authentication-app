@@ -18,9 +18,7 @@ route.post("/num/send-otp", (req, res) => {
     })
     .then((message) => {
       req.session.otp = otp;
-      console.log(" req.session.otp = otp;: ", (req.session.otp = otp));
       req.session.phone = phone;
-      console.log("  req.session.phone = phone: ", (req.session.phone = phone));
       req.session.save((err) => {
         if (err) {
           console.error("Failed to save session:", err);
