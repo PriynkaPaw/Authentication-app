@@ -35,7 +35,7 @@ function Signup() {
       console.log("formdata", formData);
       const { phone } = formData;
       const res = await axios.post(
-        "http://localhost:8080/num/send-otp",
+        "https://authentication-app-backend-dyqp.onrender.com/num/send-otp",
         {
           phone,
         },
@@ -52,7 +52,7 @@ function Signup() {
     try {
       const { phone } = formData;
       const response = await axios.post(
-        "http://localhost:8080/num/verify-otp",
+        "https://authentication-app-backend-dyqp.onrender.com/num/verify-otp",
         {
           phone,
           otp,
@@ -69,7 +69,7 @@ function Signup() {
       console.log("formdata", formData);
 
       const res = await axios.post(
-        "http://localhost:8080/register-user",
+        "https://authentication-app-backend-dyqp.onrender.com/register-user",
 
         formData,
         { withCredentials: true }
