@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { FacebookButton, GoogleButton } from "../authButtons/AuthButtons";
 import InputField from "../inputField/InputField";
+import { Link, redirect, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -26,6 +27,8 @@ function Login() {
     if (formHasErrors) {
       return;
     }
+    loginUser();
+
     console.log("user registration data", formData);
   };
 
@@ -60,7 +63,29 @@ function Login() {
     const { name, value } = e.target;
     handleChangeData(name, value);
   };
+  const naviage = useNavigate();
+  const loginUser = async () => {
+    try {
+      const { email } = formData;
+      const res = await axios.post(
+        "http://localhost:8080/login-user",
 
+        { email },
+        { withCredentials: true }
+      );
+
+      console.log("res.data.user: ", res.data.user);
+      if (res.data.user) {
+        naviage("/");
+        localStorage.setItem("isLogin", true);
+        localStorage.setItem("user", res?.data.user.name);
+      } else {
+        console.log("cannot find user");
+      }
+    } catch (error) {
+      console.error("Error while logging", error);
+    }
+  };
   return (
     <div className="container-fluid px-1 py-5 mx-auto">
       <div className="row d-flex justify-content-center">
@@ -113,6 +138,9 @@ function Login() {
                 </div>
               </div>
             </form>
+            <p>
+              Didn't signup?? <Link to={"/signup"}>SignUp</Link>{" "}
+            </p>
           </div>
         </div>
       </div>

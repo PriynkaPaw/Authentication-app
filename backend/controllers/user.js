@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 
-const registerController = async (req, res) => {
+export const registerController = async (req, res) => {
   const { email } = req.body;
   console.log("email: ", email);
   console.log("req.body", req.body);
@@ -24,4 +24,17 @@ const registerController = async (req, res) => {
   return res.status(200).send({ massage: "User Created successfully" });
 };
 
-export default registerController;
+export const loginController = async (req, res) => {
+  console.log("Req.body", req.body);
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user) {
+    return res.status(400).json({ success: false, message: "User not found" });
+  }
+
+  if (user) {
+    res.status(200).json({ user });
+  } else {
+    res.status(400).send("Wrong password");
+  }
+};

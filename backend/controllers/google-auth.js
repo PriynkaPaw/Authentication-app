@@ -92,7 +92,7 @@ router.get(
   "/callback",
   passport.authenticate("google", { failureRedirect: "/auth/google/error" }),
   (req, res) => {
-    res.redirect("http://localhost:3000/signup");
+    res.redirect("http://localhost:3000/");
   }
 );
 
@@ -112,7 +112,7 @@ router.get("/signout", (req, res) => {
         return res.status(400).send({ message: "Failed to sign out user" });
       }
       console.log("Session destroyed.");
-      res.render("auth");
+      res.redirect("http://localhost:3000/");
     });
   } catch (err) {
     res.status(400).send({ message: "Failed to sign out user" });

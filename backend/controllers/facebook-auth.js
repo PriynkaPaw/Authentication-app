@@ -9,7 +9,7 @@ passport.use(
     {
       clientID: process.env.FaceBookClientId,
       clientSecret: process.env.FaceBookClientSecret,
-      callbackURL: "http://localhost:3000/signup",
+      callbackURL: "http://localhost:3000/",
     },
     async function (accessToken, refreshToken, profile, cb) {
       console.log("Adding new facebook user to DB..");

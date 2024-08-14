@@ -16,6 +16,7 @@ function Router() {
               path={RouterPathName.login}
               element={<RouterPaths.Login />}
             />
+            <Route path={RouterPathName.home} element={<RouterPaths.Home />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

@@ -4,6 +4,7 @@ import "react-phone-input-2/lib/style.css";
 import { FacebookButton, GoogleButton } from "../authButtons/AuthButtons";
 import InputField from "../inputField/InputField";
 import axios from "axios";
+import { Link, redirect } from "react-router-dom";
 function Signup() {
   const [formData, setFormData] = useState({
     name: "",
@@ -85,6 +86,7 @@ function Signup() {
     }
     sendOtp();
     console.log("user registration data", formData);
+    redirect("/");
   };
 
   const validateField = (name, value) => {
@@ -232,6 +234,9 @@ function Signup() {
                 </div>
               </div>
             </form>
+            <p>
+              Already signup?? <Link to={"/login"}>Login</Link>{" "}
+            </p>
           </div>
         </div>
       </div>
